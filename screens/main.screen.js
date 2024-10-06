@@ -5,6 +5,8 @@ import { fetchCurrencyRates } from '../api/fetchCurrencyrate';
 import useCurrencyStore from '../state/useCurrency.store';
 import CurrencyListItem from '../components/currencyListItem';
 import dayjs from 'dayjs';
+import Arrow from '../assets/svg/arrow';
+import HeroView from '../components/heroView';
 
 export default function MainScreen() {
     const { currencies, setCurrencies, loading, setLoading } = useCurrencyStore();
@@ -29,56 +31,44 @@ export default function MainScreen() {
     const highestCurrency = sortedCurrencies[sortedCurrencies.length - 1];
 
     return (
-        <SafeAreaView style={styles.container}>
-
-            {loading && currencies.length === 0 && (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <ActivityIndicator size="large" />
-                </View>
-            )}
-
-            {currencies.length > 0 && (
-                <>
-                    <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 10, marginBottom: 10 }}>
-
-                        <View style={{ flex: 1, backgroundColor: 'red', paddingHorizontal: 20, paddingVertical: 10, borderRadius: 10 }}>
-                            <Text>Highest</Text>
-
-                            <Text>{highestCurrency.alphaCode}</Text>
-                            <Text>{highestCurrency.name}</Text>
-                            <Text>{highestCurrency.rate?.toFixed(2)}</Text>
-                            <Text>{dayjs(highestCurrency.date).format('DD MMM YYYY hh:mm A')}</Text>
-
-                        </View>
-
-                        <View style={{ flex: 1, backgroundColor: 'green', paddingHorizontal: 20, paddingVertical: 10, borderRadius: 10 }}>
-                            <Text>Lowest</Text>
-
-
-                            <Text>{lowestCurrency.alphaCode}</Text>
-                            <Text>{lowestCurrency.name}</Text>
-                            <Text>{lowestCurrency.rate?.toFixed(2)}</Text>
-                            <Text>{dayjs(lowestCurrency.date).format('DD MMM YYYY hh:mm A')}</Text>
-                        </View>
-
+        <>
+            <SafeAreaView style={styles.safeArea} />
+            <SafeAreaView style={styles.container}>
+                {loading && currencies.length === 0 && (
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size="large" />
                     </View>
+                )}
 
-                    <FlatList
-                        data={currencies}
-                        renderItem={({ item }) => <CurrencyListItem {...item} />}
-                        keyExtractor={item => item.code}
-                    />
-                </>
-            )}
+                {currencies.length > 0 && (
+                    <>
+                        <HeroView lowestCurrency={lowestCurrency} highestCurrency={highestCurrency} />
 
-            <StatusBar style="auto" />
-        </SafeAreaView>
+                        <FlatList
+                            data={currencies}
+                            renderItem={({ item }) => <CurrencyListItem {...item} />}
+                            keyExtractor={item => item.code}
+                        />
+                    </>
+                )}
+
+                <View style={{ backgroundColor: 'red' }}>
+                    <Text>Maroof</Text>
+                </View>
+
+                <StatusBar style="auto" />
+            </SafeAreaView >
+        </>
     );
 }
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 0,
+        backgroundColor: '#5bc873'
+    },
     container: {
         flex: 1,
-        backgroundColor: '#EC4207'
+        backgroundColor: '#fff'
     },
 });
