@@ -1,12 +1,16 @@
 import { Alert, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import dayjs from 'dayjs';
 import { Refresh } from "../assets/svg/refresh";
-import { Setting } from "../assets/svg/setting";
+import { Sort } from "../assets/svg/sort";
 
-const Footer = ({ date }) => {
+const Footer = ({ date, sorting }) => {
     const { footerView, button } = styles;
     const refreshButton = () => {
-        Alert.alert('hello')
+
+    }
+
+    const sortButton = () => {
+        sorting()
     }
 
     return (
@@ -22,8 +26,8 @@ const Footer = ({ date }) => {
                 </Text>
             </View>
 
-            <TouchableOpacity onPress={refreshButton} style={button}>
-                <Setting color="#5bc873" />
+            <TouchableOpacity onPress={sortButton} style={button}>
+                <Sort color="#5bc873" />
             </TouchableOpacity>
 
         </View>
