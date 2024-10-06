@@ -43,7 +43,6 @@ export default function MainScreen() {
                 {currencies.length > 0 && (
                     <>
                         <HeroView lowestCurrency={lowestCurrency} highestCurrency={highestCurrency} />
-
                         <FlatList
                             data={currencies}
                             renderItem={({ item }) => <CurrencyListItem {...item} />}
