@@ -53,30 +53,35 @@ export default function MainScreen() {
 
     return (
         <>
-            <SafeAreaView style={safeArea} />
-            <SafeAreaView style={container}>
-                {loading && currencies.length === 0 && (
-                    <View style={loader}>
-                        <ActivityIndicator size="large" />
-                    </View>
-                )}
 
-                {currencies.length > 0 && (
-                    <>
+            {loading && currencies.length === 0 && (
+                <View style={loader}>
+                    <ActivityIndicator size="large" />
+                </View>
+            )}
+
+
+
+            {currencies.length > 0 && (
+                <>
+                    <SafeAreaView style={safeArea} />
+                    <SafeAreaView style={container}>
                         <HeroView lowestCurrency={lowestCurrency} highestCurrency={highestCurrency} />
                         <View style={listView}>
                             <FlatList
                                 data={sortValues}
                                 renderItem={({ item }) => <CurrencyListItem {...item} />}
-                                keyExtractor={item => item.code}
+                                keyExtractor={(item,index) => index}
                             />
                         </View>
                         <Footer loading={loading} date={lastUpdate} sorting={sorting} callApi={callApi} />
-                    </>
-                )}
-                <StatusBar style="auto" />
-            </SafeAreaView >
+                    </SafeAreaView >
+                </>
+            )}
+            <StatusBar style="auto" />
         </>
+
+       
     );
 }
 
@@ -102,6 +107,7 @@ const styles = StyleSheet.create({
     loader: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#303030'
     }
 });

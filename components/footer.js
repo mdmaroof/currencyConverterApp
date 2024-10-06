@@ -32,7 +32,6 @@ const Footer = ({ date, sorting, callApi, loading }) => {
         outputRange: ['0deg', '360deg']
     })
 
-
     return (
         <View style={footerView}>
             <TouchableOpacity onPress={refreshButton} style={button}>

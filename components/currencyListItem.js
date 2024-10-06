@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode }) => {
-    const { item, textGray, textPrimary, textWhite, fontSizeLg, fontHeavy ,higlightText} = styles;
+    const { item, textGray, textPrimary, textWhite, fontSizeLg, fontHeavy, higlightText } = styles;
     return (
-        <View style={item}>
+        <View style={{ ...item }}>
             <View>
                 <Text style={{ ...textWhite, ...fontSizeLg }}>{code}</Text>
             </View>
@@ -12,11 +12,11 @@ const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode }) => {
                 <Text style={{ ...textGray, ...fontHeavy }}>{name}</Text>
             </View>
 
-            <Text style={higlightText}>
+            <Text style={{ ...higlightText }}>
                 {numericCode}
             </Text>
 
-        </View >
+        </View>
     )
 }
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        overflow:'hidden'
+        overflow: 'hidden'
     },
     textGray: {
         color: '#9e9e9e'
@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
         left: 5,
         zIndex: -1,
         color: '#5bc873',
-        opacity: '0.15'
+        opacity: 0.15
     },
 });

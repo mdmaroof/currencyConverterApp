@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import Arrow from "../assets/svg/arrow";
+import { isAndroid } from "../helper/platform";
 
 const Card = ({ alphaCode, rate, name, low }) => {
     const { card, cardHeading1, cardHeading2, higlightText } = styles;
@@ -13,14 +14,14 @@ const Card = ({ alphaCode, rate, name, low }) => {
                 <Arrow color={"#5bc873"} />
             </View>
 
-            <Text style={{ ...higlightText }}>{low && 'Lowest' || 'Highest'}</Text>
+            <Text style={{ ...higlightText }}>'{low && 'Lowest' || 'Highest'}'</Text>
         </View>
     )
 }
 const HeroView = ({ highestCurrency, lowestCurrency }) => {
     const { heroUi, heroView, title, titleBlock } = styles;
     return (
-        <View style={heroView}>
+        <View style={{ ...heroView }}>
             <View style={{ ...titleBlock }}>
                 <Text style={{ ...title }}>Currency Conversion's of USD</Text>
             </View>
@@ -58,8 +59,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     cardHeading1: {
-        fontWeight: 700,
-        fontSize: 18,
+        fontWeight: 800,
+        fontSize: isAndroid ? 16 : 18,
         color: '#5bc873',
     },
     cardHeading2: {
@@ -74,10 +75,11 @@ const styles = StyleSheet.create({
         right: 5,
         zIndex: -1,
         color: '#efefef',
-        opacity: '0.1'
+        opacity: 0.1
     },
     titleBlock: {
         borderBottomWidth: 1,
+        marginTop: isAndroid ? 25 : 0,
         paddingBottom: 5,
         borderBottomColor: '#fff'
     },
