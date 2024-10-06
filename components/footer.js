@@ -41,8 +41,8 @@ const Footer = ({ date, sorting, callApi, loading }) => {
             </TouchableOpacity>
 
             <View style={{ gap: 5, alignItems: 'center' }}>
-                <Text style={{ color: '#9e9e9e' }}>Last Update</Text>
-                <Text style={{ color: '#fff', fontWeight: 500, fontSize: 16 }}>
+                <Text style={{ color: '#9e9e9e', fontFamily: 'Quicksand_400Regular' }}>Last Update</Text>
+                <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Quicksand_500Medium' }}>
                     {dayjs(date).format('hh:mm:ss A, MMM DD')}
                 </Text>
             </View>

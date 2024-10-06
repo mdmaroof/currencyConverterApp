@@ -47,9 +47,10 @@ const styles = StyleSheet.create({
         color: '#5bc873'
     },
     fontHeavy: {
-        fontWeight: 700
+        fontFamily: 'Quicksand_700Bold',
     },
     fontSizeLg: {
+        fontFamily: 'Quicksand_700Bold',
         fontSize: 24,
     },
     higlightText: {

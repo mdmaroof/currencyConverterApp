@@ -20,6 +20,7 @@ const Card = ({ alphaCode, rate, name, low }) => {
 }
 const HeroView = ({ highestCurrency, lowestCurrency }) => {
     const { heroUi, heroView, title, titleBlock } = styles;
+
     return (
         <View style={{ ...heroView }}>
             <View style={{ ...titleBlock }}>
@@ -59,12 +60,13 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     cardHeading1: {
-        fontWeight: 800,
+        fontFamily: 'Quicksand_700Bold',
         fontSize: isAndroid ? 16 : 18,
         color: '#5bc873',
     },
     cardHeading2: {
         fontSize: 12,
+        fontFamily: 'Quicksand_400Regular',
         color: '#fff',
     },
     higlightText: {
@@ -84,8 +86,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#fff'
     },
     title: {
-        fontWeight: 700,
         fontSize: 20,
-        color: '#fff'
+        color: '#fff',
+        fontFamily: 'Quicksand_700Bold'
     }
 })

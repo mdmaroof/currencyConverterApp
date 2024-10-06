@@ -6,8 +6,19 @@ import useCurrencyStore from '../state/useCurrency.store';
 import CurrencyListItem from '../components/currencyListItem';
 import HeroView from '../components/heroView';
 import Footer from '../components/footer';
+import { useFonts } from 'expo-font';
+import { Quicksand_700Bold, Quicksand_600SemiBold, Quicksand_500Medium, Quicksand_400Regular } from '@expo-google-fonts/quicksand'
 
 export default function MainScreen() {
+
+    useFonts({
+        'Quicksand_700Bold': Quicksand_700Bold,
+        'Quicksand_600SemiBold': Quicksand_600SemiBold,
+        'Quicksand_500Medium': Quicksand_500Medium,
+        'Quicksand_400Regular': Quicksand_400Regular
+    })
+
+
     const { currencies, setCurrencies, loading, setLoading, setLastUpdate, lastUpdate } = useCurrencyStore();
     const [sortValue, setSortValue] = useState(null);
 
@@ -60,8 +71,6 @@ export default function MainScreen() {
                 </View>
             )}
 
-
-
             {currencies.length > 0 && (
                 <>
                     <SafeAreaView style={safeArea} />
@@ -71,7 +80,7 @@ export default function MainScreen() {
                             <FlatList
                                 data={sortValues}
                                 renderItem={({ item }) => <CurrencyListItem {...item} />}
-                                keyExtractor={(item,index) => index}
+                                keyExtractor={(item, index) => index}
                             />
                         </View>
                         <Footer loading={loading} date={lastUpdate} sorting={sorting} callApi={callApi} />
@@ -81,7 +90,7 @@ export default function MainScreen() {
             <StatusBar style="auto" />
         </>
 
-       
+
     );
 }
 
