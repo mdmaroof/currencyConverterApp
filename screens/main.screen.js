@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { fetchCurrencyRates } from '../api/fetchCurrencyrate';
 import useCurrencyStore from '../state/useCurrency.store';
 import CurrencyListItem from '../components/currencyListItem';
@@ -21,14 +21,20 @@ export default function MainScreen() {
 
     const { currencies, setCurrencies, loading, setLoading, setLastUpdate, lastUpdate } = useCurrencyStore();
     const [sortValue, setSortValue] = useState(null);
+    const [error, setError] = useState(null);
 
     const timerId = useRef(null)
     const callApi = async () => {
         if (!loading) {
             clearTimeout(timerId.current)
             setLoading(true);
-            const data = await fetchCurrencyRates();
-            await setCurrencies(Object.values(data));
+            try {
+                const data = await fetchCurrencyRates();
+                await setCurrencies(Object.values(data));
+            }
+            catch (err) {
+                setError(err.message);
+            }
             setLoading(false);
             setLastUpdate();
             timerId.current = setTimeout(callApi, 10000);
@@ -61,6 +67,16 @@ export default function MainScreen() {
     }
 
     const { listView, safeArea, container, loader } = styles;
+
+
+    if (error) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#303030' }}>
+                <Text style={{ color: '#fff', fontFamily: 'Quicksand_500Medium', textAlign: 'center' }}>{error}</Text>
+                <Button title="Reload" onPress={callApi} />
+            </View>
+        );
+    }
 
     return (
         <>

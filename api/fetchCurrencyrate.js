@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { apiRequest } from "../helper/apiRequest";
 
 const API_URL = 'https://www.floatrates.com/daily/usd.json';
@@ -7,5 +8,5 @@ export const fetchCurrencyRates = async () => {
     if (res.data) {
         return res.data;
     }
-    alert(res.error)
+    throw new Error(res.error)
 }
