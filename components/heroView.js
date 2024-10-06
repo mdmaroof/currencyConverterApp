@@ -14,7 +14,7 @@ const Card = ({ alphaCode, rate, name, low }) => {
                 <Arrow color={"#5bc873"} />
             </View>
 
-            <Text style={{ ...higlightText }}>'{low && 'Lowest' || 'Highest'}'</Text>
+            <Text style={{ ...higlightText }}>{low && 'Lowest' || 'Highest'}</Text>
         </View>
     )
 }
