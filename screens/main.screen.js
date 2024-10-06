@@ -4,8 +4,6 @@ import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } fro
 import { fetchCurrencyRates } from '../api/fetchCurrencyrate';
 import useCurrencyStore from '../state/useCurrency.store';
 import CurrencyListItem from '../components/currencyListItem';
-import dayjs from 'dayjs';
-import Arrow from '../assets/svg/arrow';
 import HeroView from '../components/heroView';
 
 export default function MainScreen() {
@@ -30,12 +28,14 @@ export default function MainScreen() {
     const lowestCurrency = sortedCurrencies[0];
     const highestCurrency = sortedCurrencies[sortedCurrencies.length - 1];
 
+    const { listView, safeArea, container, loader } = styles;
+
     return (
         <>
-            <SafeAreaView style={styles.safeArea} />
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={safeArea} />
+            <SafeAreaView style={container}>
                 {loading && currencies.length === 0 && (
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={loader}>
                         <ActivityIndicator size="large" />
                     </View>
                 )}
@@ -43,15 +43,17 @@ export default function MainScreen() {
                 {currencies.length > 0 && (
                     <>
                         <HeroView lowestCurrency={lowestCurrency} highestCurrency={highestCurrency} />
-                        <FlatList
-                            data={currencies}
-                            renderItem={({ item }) => <CurrencyListItem {...item} />}
-                            keyExtractor={item => item.code}
-                        />
+                        <View style={listView}>
+                            <FlatList
+                                data={currencies}
+                                renderItem={({ item }) => <CurrencyListItem {...item} />}
+                                keyExtractor={item => item.code}
+                            />
+                        </View>
                     </>
                 )}
 
-                <View style={{ backgroundColor: 'red' }}>
+                <View style={{ backgroundColor: '#303030' }}>
                     <Text>Maroof</Text>
                 </View>
 
@@ -68,6 +70,16 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#303030'
     },
+    listView: {
+        flex: 1,
+        backgroundColor: '#1b1b1b',
+        paddingTop: 10
+    },
+    loader: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
