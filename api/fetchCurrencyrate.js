@@ -3,7 +3,9 @@ import { apiRequest } from "../helper/apiRequest";
 const API_URL = 'https://www.floatrates.com/daily/usd.json';
 
 export const fetchCurrencyRates = async () => {
-    const data = await apiRequest(API_URL);
-    return data;
-
+    const res = await apiRequest(API_URL);
+    if (res.data) {
+        return res.data;
+    }
+    alert(res.error)
 }

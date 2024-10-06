@@ -7,7 +7,7 @@ export const apiRequest = async (api) => {
             const data = await res.json();
             return { data, status: res.status, error: null };
         }
-        return { data: null, null: res.status, error: handleApiErrors(res.status,res.error) };
+        return { data: null, null: res.status, error: handleApiErrors(res.status, res.error) };
     }
     catch (err) {
         console.log('hit', err)
