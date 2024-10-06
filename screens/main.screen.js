@@ -66,7 +66,7 @@ export default function MainScreen() {
 
     const { listView, safeArea, container, loader } = styles;
 
-    if (error && currencies.length === 0) {
+    if (!loading && error && currencies.length === 0) {
         return (
             <View style={{ ...styles.errorView }}>
                 <Text style={{ ...styles.errorText }}>{error}</Text>
