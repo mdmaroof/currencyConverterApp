@@ -7,20 +7,20 @@ const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode, date }) =>
         <View style={{ ...item }}>
             <View>
                 <Text style={{ ...textWhite, ...fontSizeLg }}>{code}</Text>
-                <Text style={{ ...textWhite, fontFamily: 'Quicksand_600SemiBold', fontSize: 12 }}>
+                <Text style={{ ...textWhite, fontFamily: 'Quicksand_600SemiBold', fontSize: 10 }}>
                     as of {dayjs(date).format('MMM DD, hh:mm A ')}
                 </Text>
             </View>
-            <View style={{ alignItems: 'flex-end' }}>
+            <View style={{ alignItems: 'flex-end', flex: 1 }}>
                 <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy }}>{rate?.toFixed(2)} {alphaCode}</Text>
-                <Text style={{ ...textGray, ...fontHeavy }}>{name}</Text>
+                <Text numberOfLines={1} style={{ ...textGray, ...fontHeavy, }}>{name}</Text>
             </View>
-
             <Text style={{ ...higlightText }}>
                 {numericCode}
             </Text>
-
         </View>
+
+
     )
 }
 
@@ -29,7 +29,7 @@ export default CurrencyListItem;
 const styles = StyleSheet.create({
     item: {
         backgroundColor: '#454545',
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         paddingVertical: 20,
         marginVertical: 10,
         marginHorizontal: 20,
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        gap: 5
     },
     textGray: {
         color: '#9e9e9e'

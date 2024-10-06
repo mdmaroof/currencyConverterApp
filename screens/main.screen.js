@@ -23,7 +23,8 @@ export default function MainScreen() {
     const [sortValue, setSortValue] = useState(null);
     const [error, setError] = useState(null);
 
-    const timerId = useRef(null)
+    const timerId = useRef(null);
+    
     const callApi = async () => {
         if (!loading) {
             clearTimeout(timerId.current)
