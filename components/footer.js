@@ -1,22 +1,44 @@
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing } from "react-native";
 import dayjs from 'dayjs';
 import { Refresh } from "../assets/svg/refresh";
 import { Sort } from "../assets/svg/sort";
+import { useEffect } from "react";
 
-const Footer = ({ date, sorting }) => {
+const Footer = ({ date, sorting, callApi, loading }) => {
     const { footerView, button } = styles;
-    const refreshButton = () => {
 
+    const refreshButton = () => callApi();
+    const sortButton = () => sorting();
+    const spinValue = new Animated.Value(0);
+
+    const animation = () => {
+        return (
+            Animated.loop(
+                Animated.timing(spinValue, {
+                    toValue: 1,
+                    duration: 750,
+                    easing: Easing.linear,
+                    useNativeDriver: true,
+                }))
+        )
     }
 
-    const sortButton = () => {
-        sorting()
-    }
+    useEffect(() => {
+        if (loading) animation().start();
+    }, [loading])
+
+    const spinValueInter = spinValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg']
+    })
+
 
     return (
         <View style={footerView}>
             <TouchableOpacity onPress={refreshButton} style={button}>
-                <Refresh color="#5bc873" />
+                <Animated.View style={{ transform: [{ rotate: spinValueInter }] }} >
+                    <Refresh color="#5bc873" />
+                </Animated.View>
             </TouchableOpacity>
 
             <View style={{ gap: 5, alignItems: 'center' }}>

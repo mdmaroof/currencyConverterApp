@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { fetchCurrencyRates } from '../api/fetchCurrencyrate';
 import useCurrencyStore from '../state/useCurrency.store';
@@ -8,18 +8,25 @@ import HeroView from '../components/heroView';
 import Footer from '../components/footer';
 
 export default function MainScreen() {
-    const { currencies, setCurrencies, loading, setLoading } = useCurrencyStore();
+    const { currencies, setCurrencies, loading, setLoading, setLastUpdate, lastUpdate } = useCurrencyStore();
     const [sortValue, setSortValue] = useState(null);
 
+    const timerId = useRef(null)
     const callApi = async () => {
-        setLoading(true);
-        const data = await fetchCurrencyRates();
-        await setCurrencies(Object.values(data));
-        setLoading(false);
+        if (!loading) {
+            clearTimeout(timerId.current)
+            setLoading(true);
+            const data = await fetchCurrencyRates();
+            await setCurrencies(Object.values(data));
+            setLoading(false);
+            setLastUpdate();
+            timerId.current = setTimeout(callApi, 10000);
+        }
     }
 
     useEffect(() => {
         callApi();
+        return (() => clearTimeout(timerId.current));
     }, []);
 
 
@@ -28,7 +35,6 @@ export default function MainScreen() {
         if (sortValue === 'asc') setSortValue('des')
         if (sortValue === 'des') setSortValue(null)
     }
-
 
     const sortedCurrencies = [...currencies].sort((a, b) => a.rate - b.rate);
     const lowestCurrency = sortedCurrencies[0];
@@ -65,7 +71,7 @@ export default function MainScreen() {
                                 keyExtractor={item => item.code}
                             />
                         </View>
-                        <Footer date={lowestCurrency?.date} sorting={sorting} />
+                        <Footer loading={loading} date={lastUpdate} sorting={sorting} callApi={callApi} />
                     </>
                 )}
                 <StatusBar style="auto" />
