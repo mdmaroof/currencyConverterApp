@@ -24,7 +24,7 @@ export default function MainScreen() {
     const [error, setError] = useState(null);
 
     const timerId = useRef(null);
-    
+
     const callApi = async () => {
         if (!loading) {
             clearTimeout(timerId.current)
@@ -59,21 +59,15 @@ export default function MainScreen() {
     const highestCurrency = sortedCurrencies[sortedCurrencies.length - 1];
 
     let sortValues = [...currencies];
-
-    if (sortValue === 'asc') {
-        sortValues = [...currencies].sort((a, b) => a.rate - b.rate);
-    }
-    if (sortValue === 'des') {
-        sortValues = [...currencies].sort((a, b) => b.rate - a.rate);
-    }
+    if (sortValue === 'asc') sortValues = [...currencies].sort((a, b) => a.rate - b.rate);
+    if (sortValue === 'des') sortValues = [...currencies].sort((a, b) => b.rate - a.rate);
 
     const { listView, safeArea, container, loader } = styles;
 
-
     if (error) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#303030' }}>
-                <Text style={{ color: '#fff', fontFamily: 'Quicksand_500Medium', textAlign: 'center' }}>{error}</Text>
+            <View style={{ ...styles.errorView }}>
+                <Text style={{ ...styles.errorText }}>{error}</Text>
                 <Button title="Reload" onPress={callApi} />
             </View>
         );
@@ -81,7 +75,6 @@ export default function MainScreen() {
 
     return (
         <>
-
             {loading && currencies.length === 0 && (
                 <View style={loader}>
                     <ActivityIndicator size="large" />
@@ -106,12 +99,12 @@ export default function MainScreen() {
             )}
             <StatusBar style="auto" />
         </>
-
-
     );
 }
 
 const styles = StyleSheet.create({
+    errorView: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#303030' },
+    errorText: { color: '#fff', fontFamily: 'Quicksand_500Medium', textAlign: 'center' },
     safeArea: {
         flex: 0,
         backgroundColor: '#5bc873'
