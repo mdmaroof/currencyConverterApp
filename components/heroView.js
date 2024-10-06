@@ -2,15 +2,15 @@ import { StyleSheet, Text, View } from "react-native";
 import Arrow from "../assets/svg/arrow";
 
 const Card = ({ alphaCode, rate, name, low }) => {
-    const { card, cardHeading1, cardHeading2, textColorGray, higlightText } = styles;
+    const { card, cardHeading1, cardHeading2, higlightText } = styles;
     return (
-        <View style={{ ...card, flexDirection: 'row', overflow: 'hidden' }}>
+        <View style={{ ...card, flexDirection: 'row', overflow: 'hidden', flex: 1 }}>
             <View style={{ gap: 2, flex: 1, justifyContent: 'center' }}>
+                <Text style={{ ...cardHeading2, }}>{name}</Text>
                 <Text style={{ ...cardHeading1 }}>{alphaCode} {rate?.toFixed(2)}</Text>
-                <Text style={{ ...cardHeading2, ...textColorGray }}>{name}</Text>
             </View>
-            <View style={{ transform: [{ rotate: low && '0deg' || '180deg' }], opacity: 0.9 }}>
-                <Arrow color={low && "#ff0000" || "#008000"} />
+            <View style={{ transform: [{ rotate: low && '0deg' || '180deg' }], height: 30 }}>
+                <Arrow color={"#5bc873"} />
             </View>
 
             <Text style={{ ...higlightText }}>{low && 'Lowest' || 'Highest'}</Text>
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#5bc873',
         paddingHorizontal: 10,
         paddingVertical: 20,
+        paddingBottom: 35,
         gap: 15,
         flexDirection: 'column'
     },
@@ -48,31 +49,32 @@ const styles = StyleSheet.create({
         gap: 10
     },
     card: {
-        backgroundColor: '#fff',
-        padding: 10,
+        backgroundColor: '#454545',
+        paddingHorizontal: 10,
+        paddingVertical: 15,
         flex: 1,
         borderRadius: 10,
-        gap: 5
+        gap: 5,
+        alignItems: 'flex-end'
     },
     cardHeading1: {
         fontWeight: 700,
-        fontSize: 14,
+        fontSize: 18,
+        color: '#5bc873',
     },
     cardHeading2: {
         fontSize: 12,
-    },
-    textColorGray: {
-        color: '#717171',
+        color: '#fff',
     },
     higlightText: {
         position: 'absolute',
         fontSize: 30,
         fontWeight: 700,
-        bottom: 5,
-        left: 5,
+        top: 5,
+        right: 5,
         zIndex: -1,
-        color: '#f1f1f1',
-        opacity: '0.75'
+        color: '#efefef',
+        opacity: '0.1'
     },
     titleBlock: {
         borderBottomWidth: 1,

@@ -5,6 +5,7 @@ import { fetchCurrencyRates } from '../api/fetchCurrencyrate';
 import useCurrencyStore from '../state/useCurrency.store';
 import CurrencyListItem from '../components/currencyListItem';
 import HeroView from '../components/heroView';
+import Footer from '../components/footer';
 
 export default function MainScreen() {
     const { currencies, setCurrencies, loading, setLoading } = useCurrencyStore();
@@ -18,9 +19,6 @@ export default function MainScreen() {
 
     useEffect(() => {
         callApi();
-
-        // const interval = setInterval(callApi, 10000); // Fetch every 10 seconds
-        // return () => clearInterval(interval);
     }, [])
 
 
@@ -52,11 +50,7 @@ export default function MainScreen() {
                         </View>
                     </>
                 )}
-
-                <View style={{ backgroundColor: '#303030' }}>
-                    <Text>Maroof</Text>
-                </View>
-
+                <Footer date={lowestCurrency.date} />
                 <StatusBar style="auto" />
             </SafeAreaView >
         </>
@@ -75,7 +69,12 @@ const styles = StyleSheet.create({
     listView: {
         flex: 1,
         backgroundColor: '#1b1b1b',
-        paddingTop: 10
+        paddingTop: 10,
+        marginTop: -15,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        overflow: 'hidden',
+        zIndex: 1,
     },
     loader: {
         flex: 1,
