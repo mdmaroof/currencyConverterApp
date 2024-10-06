@@ -27,18 +27,20 @@ export default function MainScreen() {
 
     const callApi = async () => {
         if (!loading) {
-            clearTimeout(timerId.current)
-            setLoading(true);
             try {
+                clearTimeout(timerId.current)
+                setLoading(true);
                 const data = await fetchCurrencyRates();
                 await setCurrencies(Object.values(data));
             }
             catch (err) {
                 setError(err.message);
             }
-            setLoading(false);
-            setLastUpdate();
-            timerId.current = setTimeout(callApi, 10000);
+            finally {
+                setLoading(false);
+                setLastUpdate();
+                timerId.current = setTimeout(callApi, 10000);
+            }
         }
     }
 
