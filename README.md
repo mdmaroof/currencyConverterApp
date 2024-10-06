@@ -29,6 +29,15 @@ The goal is to create a cross-platform React Native app that displays a list of 
    # or npm start
    ```
 
+## Project Structure
+
+- /api: Contain API integration and data fetching logic.
+- /components: Reusable UI components.
+- /screens: Contains the main screen of the app.
+- /helper: Contain basic helper to use around the project
+- /state: Configuration of Zustand and AsyncStorage.
+- /assets: Contains images and other static assets used in the app.
+
 ## Basic Information
 
 - App uses API endpoint [https://www.floatrates.com/daily/usd.json](https://www.floatrates.com/daily/usd.json) to fetch data.
