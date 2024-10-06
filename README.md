@@ -25,6 +25,10 @@ This project implements an Currency Conversion Rate of USD feature using React N
    # or npm start
    ```
 
+## Basic Information
+Application uses an API for fetching data [https://www.floatrates.com/daily/usd.json](https://www.floatrates.com/daily/usd.json)
+
+
 ## Author
 
 Mohd Maroof
