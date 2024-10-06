@@ -1,11 +1,15 @@
+import dayjs from 'dayjs';
 import { StyleSheet, Text, View } from 'react-native';
 
-const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode }) => {
+const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode, date }) => {
     const { item, textGray, textPrimary, textWhite, fontSizeLg, fontHeavy, higlightText } = styles;
     return (
         <View style={{ ...item }}>
             <View>
                 <Text style={{ ...textWhite, ...fontSizeLg }}>{code}</Text>
+                <Text style={{ ...textWhite, fontFamily: 'Quicksand_600SemiBold', fontSize: 12 }}>
+                    as of {dayjs(date).format('MMM DD, hh:mm A ')}
+                </Text>
             </View>
             <View style={{ alignItems: 'flex-end' }}>
                 <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy }}>{rate?.toFixed(2)} {alphaCode}</Text>
