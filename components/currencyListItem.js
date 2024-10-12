@@ -12,7 +12,10 @@ const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode, date }) =>
                 </Text>
             </View>
             <View style={{ alignItems: 'flex-end', flex: 1 }}>
-                <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy }}>{rate?.toFixed(2)} {alphaCode}</Text>
+                <View style={{ flexDirection: 'row', gap: 3, alignItems: 'flex-end' }}>
+                    <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy }}>{rate?.toFixed(2)}</Text>
+                    <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy, fontSize: 16, marginBottom: 3 }}>{alphaCode}</Text>
+                </View>
                 <Text numberOfLines={1} style={{ ...textGray, ...fontHeavy, }}>{name}</Text>
             </View>
             <Text style={{ ...higlightText }}>
