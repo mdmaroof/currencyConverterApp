@@ -110,7 +110,7 @@ export default function MainScreen() {
                                 keyExtractor={(item, index) => index}
                             />
                         </View>
-                        <Footer loading={loading} date={lastUpdate} sorting={sorting} callApi={callApi} />
+                        <Footer loading={loading} date={lastUpdate} sorting={sorting} sortValue={sortValue} callApi={callApi} />
                     </View>
                     <View
                         style={{

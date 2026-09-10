@@ -4,7 +4,7 @@ import { Refresh } from "../assets/svg/refresh";
 import { Sort } from "../assets/svg/sort";
 import { useEffect } from "react";
 
-const Footer = ({ date, sorting, callApi, loading }) => {
+const Footer = ({ date, sorting, callApi, loading, sortValue }) => {
     const { footerView, button } = styles;
 
     const refreshButton = () => callApi();
@@ -32,6 +32,7 @@ const Footer = ({ date, sorting, callApi, loading }) => {
         outputRange: ['0deg', '360deg']
     })
 
+
     return (
         <View style={footerView}>
             <TouchableOpacity onPress={refreshButton} style={button}>
@@ -48,7 +49,11 @@ const Footer = ({ date, sorting, callApi, loading }) => {
             </View>
 
             <TouchableOpacity onPress={sortButton} style={button}>
-                <Sort color="#5bc873" />
+                <Sort
+                    color="#5bc873"
+                    upArrow={sortValue === null || sortValue === 'asc'}
+                    downArrow={sortValue === null || sortValue === 'des'}
+                />
             </TouchableOpacity>
 
         </View>
