@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import Arrow from "../assets/svg/arrow";
 import { isAndroid } from "../helper/platform";
+import useCurrencyStore from "../state/useCurrency.store";
 
 const Card = ({ alphaCode, rate, name, low }) => {
     const { card, cardHeading1, cardHeading2, higlightText } = styles;
@@ -9,8 +10,8 @@ const Card = ({ alphaCode, rate, name, low }) => {
             <View style={{ gap: 2, flex: 1, justifyContent: 'center' }}>
                 <Text style={{ ...cardHeading2, }}>{name}</Text>
                 <View style={{ flexDirection: 'row', gap: 2, alignItems: 'flex-end' }}>
-                    <Text style={{ ...cardHeading1 }}>{rate?.toFixed(2)}</Text>
-                    <Text style={{ ...cardHeading1, fontSize: 12,marginBottom:2 }}>{alphaCode}</Text>
+                    <Text style={{ ...cardHeading1 }}>{Number(rate)?.toFixed(2)}</Text>
+                    <Text style={{ ...cardHeading1, fontSize: 12, marginBottom: 2 }}>{alphaCode}</Text>
                 </View>
             </View>
             <View style={{ transform: [{ rotate: low && '0deg' || '180deg' }], height: 30 }}>
@@ -22,7 +23,8 @@ const Card = ({ alphaCode, rate, name, low }) => {
     )
 }
 const HeroView = ({ highestCurrency, lowestCurrency }) => {
-    const { heroUi, heroView, title, titleBlock } = styles;
+    const { search, setSearch } = useCurrencyStore();
+    const { heroUi, heroView, title, titleBlock, inputStyle } = styles;
 
     return (
         <View style={{ ...heroView }}>
@@ -34,6 +36,15 @@ const HeroView = ({ highestCurrency, lowestCurrency }) => {
                 <Card {...highestCurrency} />
                 <Card {...lowestCurrency} low={true} />
             </View>
+
+            <TextInput
+                placeholder="Search by currency code"
+                style={inputStyle}
+                value={search}
+                onChangeText={(text) => setSearch(text)}
+                autoCapitalize="characters"
+                placeholderTextColor="#fff" />
+
         </View>
     )
 }
@@ -92,5 +103,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#fff',
         fontFamily: 'Quicksand_700Bold'
+    },
+    inputStyle: {
+        borderRadius: 5,
+        padding: 10,
+        fontSize: 16,
+        backgroundColor: '#454545',
+        color: '#fff'
     }
 })

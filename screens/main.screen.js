@@ -1,16 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Button, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { fetchCurrencyRates } from '../api/fetchCurrencyrate';
 import useCurrencyStore from '../state/useCurrency.store';
 import CurrencyListItem from '../components/currencyListItem';
 import HeroView from '../components/heroView';
 import Footer from '../components/footer';
 import { useFonts } from 'expo-font';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Quicksand_700Bold, Quicksand_600SemiBold, Quicksand_500Medium, Quicksand_400Regular } from '@expo-google-fonts/quicksand'
 
 export default function MainScreen() {
 
+    const insets = useSafeAreaInsets();
+    const safeAreaStyle = {
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+    }
     useFonts({
         'Quicksand_700Bold': Quicksand_700Bold,
         'Quicksand_600SemiBold': Quicksand_600SemiBold,
@@ -19,7 +25,7 @@ export default function MainScreen() {
     })
 
 
-    const { currencies, setCurrencies, loading, setLoading, setLastUpdate, lastUpdate } = useCurrencyStore();
+    const { currencies, setCurrencies, loading, setLoading, setLastUpdate, lastUpdate, search } = useCurrencyStore();
     const [sortValue, setSortValue] = useState(null);
     const [error, setError] = useState(null);
 
@@ -64,7 +70,11 @@ export default function MainScreen() {
     if (sortValue === 'asc') sortValues = [...currencies].sort((a, b) => a.rate - b.rate);
     if (sortValue === 'des') sortValues = [...currencies].sort((a, b) => b.rate - a.rate);
 
-    const { listView, safeArea, container, loader } = styles;
+    const { listView, container, loader, screen } = styles;
+
+    const isSearch = search.toLowerCase().includes(search.toLowerCase());
+    const searchValues = isSearch ? sortValues.filter((currency) => currency.code.toLowerCase().includes(search.toLowerCase())) : sortValues;
+
 
     if (!loading && error && currencies.length === 0) {
         return (
@@ -77,6 +87,7 @@ export default function MainScreen() {
 
     return (
         <>
+        <StatusBar style="inverted" />
             {loading && currencies.length === 0 && (
                 <View style={loader}>
                     <ActivityIndicator size="large" />
@@ -84,22 +95,27 @@ export default function MainScreen() {
             )}
 
             {currencies.length > 0 && (
-                <>
-                    <SafeAreaView style={safeArea} />
-                    <SafeAreaView style={container}>
+                <View style={screen}>
+                    <View style={{ height: insets.top, backgroundColor: '#5bc873' }} />
+                    <View style={container}>
                         <HeroView lowestCurrency={lowestCurrency} highestCurrency={highestCurrency} />
                         <View style={listView}>
                             <FlatList
-                                data={sortValues}
+                                data={searchValues}
                                 renderItem={({ item }) => <CurrencyListItem {...item} />}
                                 keyExtractor={(item, index) => index}
                             />
                         </View>
                         <Footer loading={loading} date={lastUpdate} sorting={sorting} callApi={callApi} />
-                    </SafeAreaView >
-                </>
+                    </View>
+                    <View
+                        style={{
+                            height: insets.bottom,
+                        }}
+                    />
+                </View>
             )}
-            <StatusBar style="auto" />
+     
         </>
     );
 }
@@ -107,9 +123,9 @@ export default function MainScreen() {
 const styles = StyleSheet.create({
     errorView: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#303030' },
     errorText: { color: '#fff', fontFamily: 'Quicksand_500Medium', textAlign: 'center' },
-    safeArea: {
-        flex: 0,
-        backgroundColor: '#5bc873'
+    screen: {
+        flex: 1,
+        backgroundColor: '#303030',
     },
     container: {
         flex: 1,

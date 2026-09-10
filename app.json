@@ -22,6 +22,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.ico"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-status-bar"
+    ]
   }
 }

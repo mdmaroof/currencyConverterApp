@@ -7,6 +7,8 @@ const useCurrencyStore = create((set) => ({
     setLastUpdate: () => set({ lastUpdate: Date.now() }),
     loading: false,
     setLoading: (loadingState) => set({ loading: loadingState }),
+    search: '',
+    setSearch: (search) => set({ search }),
 }))
 
 export default useCurrencyStore;

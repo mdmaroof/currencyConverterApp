@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode, date }) => {
     const { item, textGray, textPrimary, textWhite, fontSizeLg, fontHeavy, higlightText } = styles;
+
     return (
         <View style={{ ...item }}>
             <View>
@@ -13,7 +14,7 @@ const CurrencyListItem = ({ alphaCode, name, rate, code, numericCode, date }) =>
             </View>
             <View style={{ alignItems: 'flex-end', flex: 1 }}>
                 <View style={{ flexDirection: 'row', gap: 3, alignItems: 'flex-end' }}>
-                    <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy }}>{rate?.toFixed(2)}</Text>
+                    <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy }}>{Number(rate)?.toFixed(2)}</Text>
                     <Text style={{ ...textPrimary, ...fontSizeLg, ...fontHeavy, fontSize: 16, marginBottom: 3 }}>{alphaCode}</Text>
                 </View>
                 <Text numberOfLines={1} style={{ ...textGray, ...fontHeavy, }}>{name}</Text>
