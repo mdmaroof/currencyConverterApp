@@ -45,14 +45,18 @@ export default function MainScreen() {
             finally {
                 setLoading(false);
                 setLastUpdate();
-                timerId.current = setTimeout(callApi, 10000);
+                timerId.current = setTimeout(callApi, 30000);
             }
         }
     }
 
     useEffect(() => {
         callApi();
-        return (() => clearTimeout(timerId.current));
+        return (() => {
+            if (timerId.current) {
+                clearTimeout(timerId.current)
+            }
+        });
     }, []);
 
 
@@ -87,7 +91,7 @@ export default function MainScreen() {
 
     return (
         <>
-        <StatusBar style="inverted" />
+            <StatusBar style="inverted" />
             {loading && currencies.length === 0 && (
                 <View style={loader}>
                     <ActivityIndicator size="large" />
@@ -115,7 +119,7 @@ export default function MainScreen() {
                     />
                 </View>
             )}
-     
+
         </>
     );
 }
